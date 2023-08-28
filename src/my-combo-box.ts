@@ -51,6 +51,7 @@ export class MyComboBox extends MyDropdown {
     this._handleSelectSlot(e);
 
     this.selectedItems = [...this.selectedItems, this.value];
+    this.value = "";
   }
 
   /** When clicked on any part of div-looking input, the embedded input is focus.  */
