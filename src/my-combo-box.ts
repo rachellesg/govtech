@@ -33,7 +33,7 @@ export class MyComboBox extends MyDropdown {
   };
 
   /** ADD new property for selected items */
-  @property({ type: String || Array }) selectedItems: string[] = [];
+  @property({ type: Array }) selectedItems: string[] = [];
 
   @state()
   filteredMenuList: string[] = [];
@@ -44,6 +44,7 @@ export class MyComboBox extends MyDropdown {
     this.filteredMenuList = this.menuList.filter((item) =>
       this.filterMenu(this.value, item)
     );
+    this.userInputElement.addEventListener("keydown", console.log);
   }
 
   private _handleSelectChange(e: KeyboardEvent | MouseEvent) {
@@ -55,6 +56,14 @@ export class MyComboBox extends MyDropdown {
     this.value = "";
   }
 
+  private _handleRemoveBadge(e: CustomEvent) {
+    this.value = (e.target as MyDropdownItem).innerText;
+    this.selectedItems = this.selectedItems.filter(
+      (item) => item !== this.value
+    );
+    this.value = "";
+  }
+
   /** When clicked on any part of div-looking input, the embedded input is focus.  */
   private _handleToggleUserInput(e: CustomEvent) {
     e.stopPropagation();
@@ -63,6 +72,7 @@ export class MyComboBox extends MyDropdown {
   }
 
   render() {
+    console.log(this.selectedItems);
     this.filteredMenuList = this.menuList.filter(
       (item) =>
         !this.selectedItems.includes(item) && this.filterMenu(this.value, item)
@@ -75,7 +85,10 @@ export class MyComboBox extends MyDropdown {
           class="form-control">
           ${this.selectedItems.length > 0
             ? this.selectedItems.map(
-                (item) => html`<my-badge>${item}</my-badge>`
+                (item) =>
+                  html`<my-badge @click=${this._handleRemoveBadge}
+                    >${item}</my-badge
+                  >`
               )
             : ""}
 
