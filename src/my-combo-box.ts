@@ -50,6 +50,7 @@ export class MyComboBox extends MyDropdown {
     this.value = (e.target as MyDropdownItem).innerText;
     this._handleSelectSlot(e);
 
+    // add selected value to array
     this.selectedItems = [...this.selectedItems, this.value];
     this.value = "";
   }
@@ -62,9 +63,9 @@ export class MyComboBox extends MyDropdown {
   }
 
   render() {
-    console.log(this.selectedItems);
-    this.filteredMenuList = this.menuList.filter((item) =>
-      this.filterMenu(this.value, item)
+    this.filteredMenuList = this.menuList.filter(
+      (item) =>
+        !this.selectedItems.includes(item) && this.filterMenu(this.value, item)
     );
     return html`
       <div class="combobox dropdown multiselect">
