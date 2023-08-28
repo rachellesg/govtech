@@ -70,8 +70,10 @@ export class MyComboBox extends MyDropdown {
     this.selectedItems = this.selectedItems.filter(
       (item) => item !== this.value
     );
+    e.stopPropagation();
     this._updateFilteredMenuList();
     this._resetValueAndFocus();
+    this.hideMenu();
   }
 
   private _handleInputKeydown = (e: KeyboardEvent) => {
@@ -83,6 +85,7 @@ export class MyComboBox extends MyDropdown {
         this._resetValueAndFocus();
       }
     }
+    this.hideMenu();
   };
 
   /** When clicked on any part of div-looking input, the embedded input is focus.  */
