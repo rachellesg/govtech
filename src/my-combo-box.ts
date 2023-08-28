@@ -44,7 +44,16 @@ export class MyComboBox extends MyDropdown {
     this.filteredMenuList = this.menuList.filter((item) =>
       this.filterMenu(this.value, item)
     );
-    this.userInputElement.addEventListener("keydown", console.log);
+
+    // ensure case insensitivity
+    const matchingItem = this.menuList.find(
+      (item) => item.toLowerCase() === this.value.toLowerCase()
+    );
+
+    if (matchingItem) {
+      this.selectedItems = [...this.selectedItems, matchingItem];
+      this.value = "";
+    }
   }
 
   private _handleSelectChange(e: KeyboardEvent | MouseEvent) {
