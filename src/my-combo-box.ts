@@ -39,9 +39,7 @@ export class MyComboBox extends MyDropdown {
   private _handleInputChange(e: CustomEvent) {
     this.showMenu();
     this.value = (e.target as HTMLInputElement).value;
-    this.filteredMenuList = this.menuList.filter((item) =>
-      this.filterMenu(this.value, item)
-    );
+    this._updateFilteredMenuList();
 
     // ensure case insensitivity
     const matchingItem = this.menuList.find(
@@ -51,8 +49,7 @@ export class MyComboBox extends MyDropdown {
     if (matchingItem) {
       if (this.selectedItems.includes(matchingItem)) return;
       this.selectedItems = [...this.selectedItems, matchingItem];
-      this.value = "";
-      this.userInputElement.focus();
+      this._resetValueAndFocus();
     }
 
     this.userInputElement.addEventListener("keydown", this._handleInputKeydown);
@@ -64,12 +61,8 @@ export class MyComboBox extends MyDropdown {
 
     // add selected value to array
     this.selectedItems = [...this.selectedItems, this.value];
-    this.filteredMenuList = this.menuList.filter(
-      (item) =>
-        !this.selectedItems.includes(item) && this.filterMenu(this.value, item)
-    );
-    this.value = "";
-    this.userInputElement.focus();
+    this._updateFilteredMenuList();
+    this._resetValueAndFocus();
   }
 
   private _handleRemoveBadge(e: CustomEvent) {
@@ -77,12 +70,8 @@ export class MyComboBox extends MyDropdown {
     this.selectedItems = this.selectedItems.filter(
       (item) => item !== this.value
     );
-    this.filteredMenuList = this.menuList.filter(
-      (item) =>
-        !this.selectedItems.includes(item) && this.filterMenu(this.value, item)
-    );
-    this.value = "";
-    this.userInputElement.focus();
+    this._updateFilteredMenuList();
+    this._resetValueAndFocus();
   }
 
   private _handleInputKeydown = (e: KeyboardEvent) => {
@@ -90,13 +79,8 @@ export class MyComboBox extends MyDropdown {
       if (this.selectedItems.length > 0) {
         const newArray = this.selectedItems.slice(0, -1);
         this.selectedItems = newArray;
-        this.filteredMenuList = this.menuList.filter(
-          (item) =>
-            !this.selectedItems.includes(item) &&
-            this.filterMenu(this.value, item)
-        );
-        this.value = "";
-        this.userInputElement.focus();
+        this._updateFilteredMenuList();
+        this._resetValueAndFocus();
       }
     }
   };
@@ -105,14 +89,23 @@ export class MyComboBox extends MyDropdown {
   private _handleToggleUserInput(e: CustomEvent) {
     e.stopPropagation();
     this._onClickDropdownToggle();
-    this.userInputElement.focus();
+    this._resetValueAndFocus();
   }
 
-  render() {
+  private _updateFilteredMenuList() {
     this.filteredMenuList = this.menuList.filter(
       (item) =>
         !this.selectedItems.includes(item) && this.filterMenu(this.value, item)
     );
+  }
+
+  private _resetValueAndFocus() {
+    this.value = "";
+    this.userInputElement.focus();
+  }
+
+  render() {
+    this._updateFilteredMenuList();
     return html`
       <div class="combobox dropdown multiselect">
         <div
