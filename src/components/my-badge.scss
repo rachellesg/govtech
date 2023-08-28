@@ -1,0 +1,31 @@
+.cancel-btn {
+  all: unset;
+  cursor: pointer;
+}
+.badge {
+  font-size: min(0.875em, 2rem);
+  line-height: 1.145;
+  padding: 0.285em 0.571em;
+  border-radius: 0.3125rem;
+  color: rgb(255, 255, 255);
+  display: inline-block;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.bg-primary {
+  --sgds-bg-opacity: 1;
+  --sgds-primary-rgb: 89, 37, 220;
+  background-color: rgba(
+    var(--sgds-primary-rgb),
+    var(--sgds-bg-opacity)
+  ) !important;
+}
+button {
+  all: unset;
+}
+svg.bi{
+    display: inline-block;
+    vertical-align: middle;
+}

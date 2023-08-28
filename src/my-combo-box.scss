@@ -1,0 +1,51 @@
+/* To position the label/hintText on top of the input box, rather than on the left. */
+.form-control-icon {
+  bottom: 0;
+}
+
+.combobox.multiselect {
+  justify-content: flex-start;
+}
+
+.form-control-multiselect {
+  all: unset;
+}
+.form-control-with-tags:focus {
+  cursor: text;
+}
+
+em {
+  font-size: 12px;
+  color: grey;
+  padding: 1rem;
+}
+
+.combobox {
+  align-items: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  width: 100%;
+}
+
+.form-control {
+  appearance: none;
+  background-clip: padding-box;
+  background-color: #fff;
+  border: 1px solid #98a2b3;
+  border-radius: 0.3125rem;
+  color: #1d2939;
+  display: flex;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 2;
+  padding: 0.4375rem 1rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
+  }
+
+svg.bi {
+  margin-left: auto;
+}
