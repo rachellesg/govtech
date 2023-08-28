@@ -32,6 +32,9 @@ export class MyComboBox extends MyDropdown {
     return itemLowerCase.startsWith(valueLower);
   };
 
+  /** ADD new property for selected items */
+  @property({ type: String || Array }) selectedItems: string[] = [];
+
   @state()
   filteredMenuList: string[] = [];
 
@@ -46,6 +49,8 @@ export class MyComboBox extends MyDropdown {
   private _handleSelectChange(e: KeyboardEvent | MouseEvent) {
     this.value = (e.target as MyDropdownItem).innerText;
     this._handleSelectSlot(e);
+
+    this.selectedItems = [...this.selectedItems, this.value];
   }
 
   /** When clicked on any part of div-looking input, the embedded input is focus.  */
@@ -56,6 +61,7 @@ export class MyComboBox extends MyDropdown {
   }
 
   render() {
+    console.log(this.selectedItems);
     this.filteredMenuList = this.menuList.filter((item) =>
       this.filterMenu(this.value, item)
     );
@@ -64,20 +70,30 @@ export class MyComboBox extends MyDropdown {
         <div
           @click=${this._handleToggleUserInput}
           ${ref(this.myDropdown)}
-          class="form-control"
-        >
-          <my-badge>Sample badge (to be replaced)</my-badge>
+          class="form-control">
+          ${this.selectedItems.length > 0
+            ? this.selectedItems.map(
+                (item) => html`<my-badge>${item}</my-badge>`
+              )
+            : ""}
+
           <input
             id="user-input"
             class="form-control-multiselect"
             type="text"
             @input=${this._handleInputChange}
             placeholder=${this.placeholder}
-            .value=${this.value}
-          />
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-</svg>
+            .value=${this.value} />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-search"
+            viewBox="0 0 16 16">
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+          </svg>
         </div>
         <ul class="dropdown-menu" part="menu">
           ${this.filteredMenuList.length > 0
