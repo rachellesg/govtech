@@ -70,7 +70,6 @@ export class MyComboBox extends MyDropdown {
     this.selectedItems = this.selectedItems.filter(
       (item) => item !== this.value
     );
-    e.stopPropagation();
     this._updateFilteredMenuList();
     this._resetValueAndFocus();
     this.hideMenu();
