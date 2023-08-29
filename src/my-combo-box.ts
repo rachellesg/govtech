@@ -84,8 +84,8 @@ export class MyComboBox extends MyDropdown {
         this._updateFilteredMenuList();
         this._resetValueAndFocus();
       }
+      this.hideMenu();
     }
-    this.hideMenu();
   };
 
   /** When clicked on any part of div-looking input, the embedded input is focus.  */
