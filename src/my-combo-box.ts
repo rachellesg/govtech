@@ -51,8 +51,6 @@ export class MyComboBox extends MyDropdown {
       this.selectedItems = [...this.selectedItems, matchingItem];
       this._resetValueAndFocus();
     }
-
-    this.userInputElement.addEventListener("keydown", this._handleInputKeydown);
   }
 
   private _handleSelectChange(e: KeyboardEvent | MouseEvent) {
@@ -128,6 +126,7 @@ export class MyComboBox extends MyDropdown {
             class="form-control-multiselect"
             type="text"
             @input=${this._handleInputChange}
+            @keydown=${this._handleInputKeydown}
             placeholder=${this.placeholder}
             .value=${this.value} />
           <svg
